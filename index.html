@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AP Biology Unit 7: Natural Selection Practice Quiz</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light dark;
+      --bg: #0b1020;
+      --card-bg: #111827;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --error: #f97373;
+      --correct: #4ade80;
+      --border: rgba(148, 163, 184, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
+      color: var(--text);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 960px;
+      margin-inline: auto;
+      background: linear-gradient(135deg, rgba(15,23,42,0.98), rgba(8,47,73,0.96));
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(15, 23, 42, 0.8);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-height: 100vh;
+    }
+
+    header {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.35), transparent 55%);
+    }
+
+    .badge {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(125, 211, 252, 0.6);
+      background: rgba(15,23,42,0.7);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .title-block {
+      flex: 1;
+      min-width: 0;
+    }
+
+    h1 {
+      font-size: clamp(18px, 2.2vw, 22px);
+      margin: 0 0 4px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    main {
+      flex: 1;
+      overflow: auto;
+      padding: 18px 22px 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 1.05fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 780px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .quiz-card {
+      background: radial-gradient(circle at top left, rgba(15,118,110,0.55), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(30,64,175,0.55), transparent 60%),
+                  rgba(15,23,42,0.92);
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,0.45);
+      padding: 16px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(56,189,248,0.2), transparent 60%);
+      opacity: 0.16;
+      pointer-events: none;
+    }
+
+    .quiz-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .quiz-intro {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.75);
+      background: rgba(15,23,42,0.9);
+      color: var(--text);
+      padding: 6px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out, border-color 0.1s;
+    }
+
+    .btn.primary {
+      border-color: rgba(56,189,248,0.9);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.28), transparent 55%),
+                  rgba(15,23,42,0.96);
+    }
+
+    .btn.small {
+      padding: 4px 10px;
+      font-size: 12px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(15,23,42,0.9);
+      border-color: rgba(248,250,252,0.8);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .btn[disabled] {
+      opacity: 0.5;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .question {
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.9);
+      padding: 10px 11px 10px;
+      margin-bottom: 10px;
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .q-number {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .q-status-chip {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .question-text {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .options {
+      display: grid;
+      gap: 6px;
+    }
+
+    .option {
+      position: relative;
+      padding: 7px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15,23,42,0.85);
+      transition: border-color 0.12s ease-out, background 0.12s ease-out, transform 0.08s ease-out;
+    }
+
+    .option-label {
+      font-weight: 600;
+      font-size: 12px;
+      width: 18px;
+      text-align: center;
+      flex-shrink: 0;
+      color: var(--muted);
+    }
+
+    .option-text {
+      flex: 1;
+    }
+
+    .option:hover {
+      border-color: rgba(148,163,184,0.95);
+      transform: translateY(-0.5px);
+    }
+
+    .option.selected {
+      border-color: var(--accent);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.22), transparent 55%),
+                  rgba(15,23,42,0.95);
+    }
+
+    .option.correct {
+      border-color: var(--correct);
+      box-shadow: 0 0 0 1px rgba(74,222,128,0.35);
+    }
+
+    .option.incorrect {
+      border-color: var(--error);
+      box-shadow: 0 0 0 1px rgba(248,113,113,0.35);
+    }
+
+    .option.correct .option-label {
+      color: var(--correct);
+    }
+
+    .option.incorrect .option-label {
+      color: var(--error);
+    }
+
+    .feedback {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .feedback span {
+      font-weight: 600;
+    }
+
+    .feedback.correct span {
+      color: var(--correct);
+    }
+
+    .feedback.incorrect span {
+      color: var(--error);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: radial-gradient(circle at top right, rgba(56,189,248,0.25), transparent 55%),
+                  rgba(15,23,42,0.95);
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .score-pill {
+      font-size: 12px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.7);
+      color: var(--muted);
+    }
+
+    .score-pill strong {
+      color: var(--correct);
+    }
+
+    .progress-bar {
+      position: relative;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      overflow: hidden;
+      border: 1px solid rgba(31,41,55,0.9);
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(56,189,248,0.2), rgba(74,222,128,0.8));
+      transition: width 0.15s ease-out;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(148,163,184,0.8);
+    }
+
+    .dot.correct { background: var(--correct); }
+    .dot.incorrect { background: var(--error); }
+    .dot.unanswered { background: rgba(148,163,184,0.5); }
+
+    .q-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(32px, 1fr));
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .q-tile {
+      border-radius: 999px;
+      padding: 4px 0;
+      text-align: center;
+      border: 1px solid rgba(148,163,184,0.6);
+      cursor: pointer;
+      background: rgba(15,23,42,0.9);
+      transition: border-color 0.12s, background 0.12s, transform 0.08s;
+    }
+
+    .q-tile:hover {
+      transform: translateY(-0.5px);
+      border-color: rgba(248,250,252,0.85);
+    }
+
+    .q-tile.current {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.6);
+    }
+
+    .q-tile.answered {
+      background: rgba(15,118,110,0.45);
+      border-color: rgba(34,197,94,0.7);
+    }
+
+    .q-tile.correct {
+      background: rgba(22,163,74,0.65);
+      border-color: rgba(74,222,128,0.9);
+      color: #ecfdf5;
+    }
+
+    .q-tile.incorrect {
+      background: rgba(220,38,38,0.55);
+      border-color: rgba(248,113,113,0.9);
+      color: #fef2f2;
+    }
+
+    .tips {
+      border-radius: 12px;
+      border: 1px dashed rgba(148,163,184,0.7);
+      padding: 7px 9px;
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(15,23,42,0.85);
+    }
+
+    .tips strong {
+      color: var(--accent);
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .hidden-answer-key {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .hidden-answer-key code {
+      font-size: 11px;
+      padding: 2px 5px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.9);
+    }
+
+    /* Exam mode panel */
+    .exam-panel {
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.9);
+      padding: 8px 9px 9px;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .exam-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .timer-display {
+      font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.9);
+      color: var(--accent);
+    }
+
+    .exam-controls-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .exam-controls-row label {
+      color: var(--muted);
+    }
+
+    .exam-select {
+      font-size: 11px;
+      padding: 3px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.9);
+      color: var(--text);
+    }
+
+    .exam-buttons-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .exam-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .exam-note strong {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="badge">AP Biology · Unit 7</div>
+      <div class="title-block">
+        <h1>Natural Selection Practice Quiz</h1>
+        <div class="subtitle">
+          Multiple-choice review for topics 7.1–7.11 (no 7.12), designed for quick self-check or timed “exam mode”.
+        </div>
+        <div class="pill-row">
+          <div class="pill"><span>✔</span><span>20 questions</span></div>
+          <div class="pill"><span>⏱</span><span>Recommended: 20–25 minutes</span></div>
+          <div class="pill"><span>🎯</span><span>Focus: natural selection, speciation, Hardy–Weinberg</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="quiz-card">
+        <div class="quiz-card-inner">
+          <p class="quiz-intro">
+            <strong>Practice mode:</strong> Click “Check all answers” any time.<br />
+            <strong>Exam mode:</strong> Start the timer in the sidebar. Answer key will unlock only when the exam ends.
+          </p>
+          <div class="controls-row">
+            <button class="btn primary" id="checkAllBtn">Check all answers</button>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn small" id="clearBtn">Clear answers</button>
+              <button class="btn small" id="toggleKeyBtn">Show/Hide answer key</button>
+            </div>
+          </div>
+
+          <div id="questionsContainer"></div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="progress-header">
+          <div>
+            <div class="progress-title">Progress &amp; Score</div>
+            <div class="footer-note" id="scoreLabel">0 / 20 correct</div>
+          </div>
+          <div class="score-pill"><strong id="scorePercent">0%</strong> correct</div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-bar-inner" id="progressBar"></div>
+        </div>
+        <div class="legend">
+          <span><span class="dot correct"></span> Correct</span>
+          <span><span class="dot incorrect"></span> Wrong</span>
+          <span><span class="dot unanswered"></span> Unanswered</span>
+        </div>
+
+        <div class="q-grid" id="questionGrid"></div>
+
+        <div class="exam-panel">
+          <div class="exam-header-row">
+            <span>Exam mode</span>
+            <span class="timer-display" id="timerDisplay">Off</span>
+          </div>
+          <div class="exam-controls-row">
+            <label for="examDuration">Duration:</label>
+            <select id="examDuration" class="exam-select">
+              <option value="10">10 min</option>
+              <option value="15">15 min</option>
+              <option value="20" selected>20 min</option>
+              <option value="25">25 min</option>
+              <option value="30">30 min</option>
+              <option value="40">40 min</option>
+            </select>
+          </div>
+          <div class="exam-buttons-row">
+            <button class="btn small" id="startExamBtn">Start exam</button>
+            <button class="btn small" id="endExamBtn" disabled>End exam now</button>
+          </div>
+          <p class="exam-note">
+            <strong>While exam is running:</strong> answer key is hidden, and “Check all answers” works as “Submit exam”.
+          </p>
+        </div>
+
+        <div class="tips">
+          <strong>Study tip:</strong> Say your reasoning out loud for each question. If you can explain
+          <em>why</em> an answer is correct, you probably remember the concept.
+        </div>
+        <div class="hidden-answer-key" id="hiddenKey" style="display:none;">
+          Answer key (A–D):<br />
+          <code>1:A 2:C 3:C 4:B 5:C 6:B 7:C 8:C 9:D 10:A 11:C 12:C 13:B 14:B 15:B 16:A 17:C 18:B 19:B 20:C</code>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        text: "Northern elephant seals were hunted to near extinction in the 1890s, reducing their population to only about 20 individuals. Today their numbers have rebounded to over 30,000, but the seals still exhibit extremely low genetic variation. What is the most likely explanation for this loss of genetic diversity?",
+        options: [
+          "Bottleneck effect – a drastic reduction in population size that limited genetic variation",
+          "Founder effect – a small group colonized a new area with limited alleles",
+          "Directional selection – natural selection eliminated most alleles",
+          "Gene flow – migration repeatedly removed alleles from the population"
+        ],
+        correct: 0
+      },
+      {
+        text: "Whales possess small pelvic bones that do not aid in swimming, and cave-dwelling fish often have remnants of non-functional eyes. These ‘leftover’ structures, which had functions in the organisms’ ancestors but are now reduced or useless, are best described as:",
+        options: [
+          "Homologous structures",
+          "Analogous structures",
+          "Vestigial structures",
+          "Mutation byproducts"
+        ],
+        correct: 2
+      },
+      {
+        text: "In a large population of pea plants, 9% of individuals express a recessive phenotype for flower color (e.g., white flowers) and the rest have the dominant phenotype (purple flowers). Assuming Hardy–Weinberg equilibrium, what percentage of the population is expected to be heterozygous for this flower color gene?",
+        options: ["9%","21%","42%","49%"],
+        correct: 2
+      },
+      {
+        text: "On either side of the Grand Canyon live two species of antelope squirrels that were once a single population. Geological changes split the population, and over time each group evolved into a distinct species. When individuals from the two groups are brought together, they will not mate with each other. This scenario is an example of:",
+        options: [
+          "Sympatric speciation via disruptive selection",
+          "Allopatric speciation caused by geographic isolation",
+          "Adaptive radiation following a mass extinction",
+          "Convergent evolution due to similar habitats"
+        ],
+        correct: 1
+      },
+      {
+        text: "In the early 1900s, botanists discovered that two new species of flowering plant had arisen in a region where three different plant species were introduced and often produced sterile hybrids. The new species were fertile and each could only breed with its own kind, not with the original species. Further investigation revealed that the hybrid offspring had doubled their chromosome number, allowing fertility. Which of the following mechanisms best explains the origin of these new plant species?",
+        options: [
+          "Allopatric speciation via geographic isolation",
+          "Habitat differentiation in sympatry",
+          "Sympatric speciation through polyploidy",
+          "Genetic drift in small populations"
+        ],
+        correct: 2
+      },
+      {
+        text: "Male peafowl (peacocks) have large, colorful tail feathers that they display to attract mates, while female peafowl (peahens) are much smaller and lack ornate tails. The evolution of showy tails in males—despite potentially reducing their survival by making them more visible to predators—is a result of:",
+        options: ["Stabilizing selection","Sexual selection","Artificial selection","Kin selection"],
+        correct: 1
+      },
+      {
+        text: "Humans have dramatically modified certain plant species, such as wild mustard, through selective breeding to create different crops like broccoli, cabbage, and cauliflower. In another example, all domestic dog breeds were developed from wolves by humans carefully choosing which individuals could reproduce. These processes are examples of:",
+        options: ["Directional natural selection","Sexual selection","Artificial selection","Genetic drift"],
+        correct: 2
+      },
+      {
+        text: "Populations of all living organisms display genetic variation. What is the ultimate source of all new heritable genetic variation in a population?",
+        options: [
+          "Crossing over during meiosis",
+          "Independent assortment of chromosomes",
+          "Mutations in DNA",
+          "Gene flow between populations"
+        ],
+        correct: 2
+      },
+      {
+        text: "All the following conditions are essential for a population to remain in Hardy–Weinberg equilibrium EXCEPT:",
+        options: [
+          "A very large population size to minimize random drift",
+          "Random mating among all individuals",
+          "No net mutations occurring in the gene pool",
+          "Natural selection favoring the most common phenotype"
+        ],
+        correct: 3
+      },
+      {
+        text: "The bones in the forelimbs of a whale, a bat, and a human share the same general arrangement (one upper arm bone, two lower arm bones, wrist bones, and five digits), even though these appendages now serve very different functions (swimming, flying, and manipulating objects, respectively). These forelimbs are examples of:",
+        options: [
+          "Homologous structures, indicating common ancestry",
+          "Analogous structures, the result of convergent evolution",
+          "Vestigial structures with no current function",
+          "Developmental coincidences without evolutionary significance"
+        ],
+        correct: 0
+      },
+      {
+        text: "Nearly all organisms on Earth use DNA as their genetic material and share the same genetic code (codons coding for the same amino acids). This is best explained by:",
+        options: [
+          "Coincidence – different codes converged to the same sequence by chance",
+          "Environmental necessity – the code is the only chemically possible option",
+          "Common ancestry – all modern life inherited this code from an early life-form",
+          "Similar selective pressures – the code was favored repeatedly in isolated lineages"
+        ],
+        correct: 2
+      },
+      {
+        text: "‘Biological fitness’ is a term used in evolutionary theory. Which of the following best measures an organism’s fitness?",
+        options: [
+          "The physical strength and size of the organism, compared to others in the population",
+          "The ability of the organism to live a long life relative to others",
+          "The number of viable, fertile offspring the organism produces",
+          "The organism’s efficiency in obtaining food and avoiding predators"
+        ],
+        correct: 2
+      },
+      {
+        text: "Overuse of antibiotics in medicine and agriculture has led to many bacterial strains that are resistant to multiple drugs. Initially, such drug-resistant bacteria were very rare, but they have become much more common as susceptible bacteria are killed off. This increase in antibiotic-resistant bacteria is an example of:",
+        options: [
+          "Genetic drift acting on bacterial populations",
+          "Directional natural selection favoring resistant individuals",
+          "Sexual selection, since bacteria with resistance have higher mating success",
+          "Artificial selection imposed by humans breeding bacteria"
+        ],
+        correct: 1
+      },
+      {
+        text: "A few individuals from a mainland bird population are blown in a storm to a remote oceanic island. These birds establish a new population on the island, but the allele frequencies in the island population differ from those of the original source population. Which evolutionary mechanism has most likely occurred in the formation of the new island population?",
+        options: [
+          "Gene flow",
+          "Founder effect (a form of genetic drift)",
+          "Heterozygote advantage",
+          "Stabilizing selection"
+        ],
+        correct: 1
+      },
+      {
+        text: "Sickle-cell disease in humans is caused by a recessive allele (s). Individuals with genotype ss suffer from the disease, while those with genotype SS have normal red blood cells but no malaria resistance. Heterozygous individuals (Ss) are generally healthy and also have increased resistance to malaria. In regions where malaria is common, the s allele is maintained at relatively high frequencies in the population due to the improved survival of Ss individuals. This situation, where heterozygotes have higher fitness than either homozygote, exemplifies:",
+        options: ["Genetic drift","Heterozygote advantage","Sexual selection","Convergent evolution"],
+        correct: 1
+      },
+      {
+        text: "A simplified cladogram shows the evolutionary relationships among major primate groups: lemurs, lorises, tarsiers, New World monkeys, Old World monkeys, apes, and humans. Based on such a cladogram, which of the following statements is correct?",
+        options: [
+          "Humans and apes share a more recent common ancestor with each other than either does with Old World monkeys.",
+          "New World monkeys are more closely related to lemurs than they are to Old World monkeys.",
+          "Lemurs and lorises together form a clade that includes all the other primate groups shown.",
+          "Old World monkeys and apes evolved independently and do not share a common ancestor."
+        ],
+        correct: 0
+      },
+      {
+        text: "Three patterns of natural selection affect a trait distribution. In one graph, the original population splits into two peaks at the extremes because individuals with extreme trait values have higher fitness than those with intermediate values. Which form of selection is depicted?",
+        options: ["Stabilizing selection","Directional selection","Disruptive selection","Genetic drift"],
+        correct: 2
+      },
+      {
+        text: "In the Galápagos Islands, a single ancestral finch species gave rise to over a dozen new finch species, each adapted to a different ecological niche and food source, in a relatively short evolutionary time after the islands were colonized. This rapid diversification of one lineage into many new species to fill various niches is an example of:",
+        options: ["Convergent evolution","Adaptive radiation","Artificial selection","Hardy–Weinberg equilibrium"],
+        correct: 1
+      },
+      {
+        text: "Cacti in North America and some euphorbia plants in African deserts have very similar features: thick fleshy stems and spines instead of leaves. However, these two plant groups are not closely related – their last common ancestor lacked these desert adaptations. The similarity in form is due to both evolving under similar desert conditions. This phenomenon is an example of:",
+        options: [
+          "Divergent evolution producing homologous structures",
+          "Convergent evolution producing analogous structures",
+          "Coevolution between cactus and euphorbia species",
+          "Genetic drift in isolated populations"
+        ],
+        correct: 1
+      },
+      {
+        text: "Which of the following scenarios describes coevolution?",
+        options: [
+          "Fast-swimming predators like dolphins and sharks independently evolving similar streamlined bodies to chase prey",
+          "A population of insects experiencing a mutation that increases camouflage, leading to increased survival from bird predation",
+          "Flowering plants evolving nectar tubes of certain lengths while their pollinator insects simultaneously evolve matching proboscis lengths",
+          "A group of lizards on an island diversifying into many species occupying different habitats and diets"
+        ],
+        correct: 2
+      }
+    ];
+
+    const state = {
+      selected: Array(questions.length).fill(null),
+      checked: false,
+      currentIndex: 0
+    };
+
+    const exam = {
+      running: false,
+      remainingSeconds: 0,
+      timerId: null,
+      durationSeconds: 0
+    };
+
+    const questionsContainer = document.getElementById('questionsContainer');
+    const questionGrid = document.getElementById('questionGrid');
+    const progressBar = document.getElementById('progressBar');
+    const scoreLabel = document.getElementById('scoreLabel');
+    const scorePercent = document.getElementById('scorePercent');
+    const hiddenKey = document.getElementById('hiddenKey');
+    const checkAllBtn = document.getElementById('checkAllBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const toggleKeyBtn = document.getElementById('toggleKeyBtn');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const examDurationSelect = document.getElementById('examDuration');
+    const startExamBtn = document.getElementById('startExamBtn');
+    const endExamBtn = document.getElementById('endExamBtn');
+
+    function renderQuestions() {
+      questionsContainer.innerHTML = '';
+      questions.forEach((q, index) => {
+        const qEl = document.createElement('article');
+        qEl.className = 'question';
+
+        const header = document.createElement('div');
+        header.className = 'question-header';
+        const num = document.createElement('div');
+        num.className = 'q-number';
+        num.textContent = `Question ${index + 1}`;
+
+        const statusChip = document.createElement('div');
+        statusChip.className = 'q-status-chip';
+        statusChip.id = `status-${index}`;
+        statusChip.textContent = 'Unanswered';
+
+        header.appendChild(num);
+        header.appendChild(statusChip);
+
+        const text = document.createElement('div');
+        text.className = 'question-text';
+        text.textContent = q.text;
+
+        const optionsEl = document.createElement('div');
+        optionsEl.className = 'options';
+
+        q.options.forEach((opt, optIndex) => {
+          const optEl = document.createElement('div');
+          optEl.className = 'option';
+          optEl.dataset.qIndex = index;
+          optEl.dataset.optIndex = optIndex;
+
+          const label = document.createElement('div');
+          label.className = 'option-label';
+          label.textContent = String.fromCharCode(65 + optIndex);
+
+          const optText = document.createElement('div');
+          optText.className = 'option-text';
+          optText.textContent = opt;
+
+          optEl.appendChild(label);
+          optEl.appendChild(optText);
+
+          optEl.addEventListener('click', () => {
+            state.selected[index] = optIndex;
+            state.checked = false;
+            updateSelectionStyles(index);
+            updateStatusChip(index);
+            updateSidebar();
+            scrollToQuestion(index);
+          });
+
+          optionsEl.appendChild(optEl);
+        });
+
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback';
+        feedback.id = `feedback-${index}`;
+        feedback.style.display = 'none';
+
+        qEl.appendChild(header);
+        qEl.appendChild(text);
+        qEl.appendChild(optionsEl);
+        qEl.appendChild(feedback);
+
+        questionsContainer.appendChild(qEl);
+      });
+    }
+
+    function updateSelectionStyles(qIndex) {
+      const questionEl = questionsContainer.children[qIndex];
+      const optionsEls = questionEl.querySelectorAll('.option');
+      optionsEls.forEach((optEl) => {
+        optEl.classList.remove('selected', 'correct', 'incorrect');
+      });
+
+      const selectedIndex = state.selected[qIndex];
+      if (selectedIndex !== null) {
+        optionsEls[selectedIndex].classList.add('selected');
+      }
+
+      if (state.checked) {
+        const correctIndex = questions[qIndex].correct;
+        optionsEls[correctIndex].classList.add('correct');
+        if (selectedIndex !== null && selectedIndex !== correctIndex) {
+          optionsEls[selectedIndex].classList.add('incorrect');
+        }
+      }
+    }
+
+    function updateStatusChip(qIndex) {
+      const chip = document.getElementById(`status-${qIndex}`);
+      const selectedIndex = state.selected[qIndex];
+      if (selectedIndex === null) {
+        chip.textContent = 'Unanswered';
+        chip.style.borderColor = 'rgba(148,163,184,0.6)';
+        chip.style.color = 'var(--muted)';
+        return;
+      }
+      if (!state.checked) {
+        chip.textContent = `Chosen: ${String.fromCharCode(65 + selectedIndex)}`;
+        chip.style.borderColor = 'var(--accent)';
+        chip.style.color = 'var(--accent)';
+        return;
+      }
+      const correctIndex = questions[qIndex].correct;
+      if (selectedIndex === correctIndex) {
+        chip.textContent = 'Correct';
+        chip.style.borderColor = 'var(--correct)';
+        chip.style.color = 'var(--correct)';
+      } else {
+        chip.textContent = `Wrong (correct: ${String.fromCharCode(65 + correctIndex)})`;
+        chip.style.borderColor = 'var(--error)';
+        chip.style.color = 'var(--error)';
+      }
+    }
+
+    function updateFeedback(qIndex) {
+      const feedbackEl = document.getElementById(`feedback-${qIndex}`);
+      const selectedIndex = state.selected[qIndex];
+      const correctIndex = questions[qIndex].correct;
+
+      if (!state.checked || selectedIndex === null) {
+        feedbackEl.style.display = 'none';
+        return;
+      }
+
+      feedbackEl.style.display = 'block';
+      const isCorrect = selectedIndex === correctIndex;
+      feedbackEl.classList.toggle('correct', isCorrect);
+      feedbackEl.classList.toggle('incorrect', !isCorrect);
+      if (isCorrect) {
+        feedbackEl.innerHTML = '<span>Correct!</span> Nice work — this matches the idea in the notes.';
+      } else {
+        feedbackEl.innerHTML = `<span>Not yet.</span> Correct answer is <strong>${String.fromCharCode(65 + correctIndex)}</strong>.`;
+      }
+    }
+
+    function renderSidebar() {
+      questionGrid.innerHTML = '';
+      questions.forEach((_, index) => {
+        const tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = 'q-tile';
+        tile.textContent = index + 1;
+        tile.id = `tile-${index}`;
+        tile.addEventListener('click', () => {
+          state.currentIndex = index;
+          scrollToQuestion(index);
+          updateSidebar();
+        });
+        questionGrid.appendChild(tile);
+      });
+      updateSidebar();
+    }
+
+    function updateSidebar() {
+      const total = questions.length;
+      let answered = 0;
+      let correct = 0;
+
+      questions.forEach((q, index) => {
+        const selectedIndex = state.selected[index];
+        const correctIndex = q.correct;
+        const tile = document.getElementById(`tile-${index}`);
+        tile.classList.remove('current', 'answered', 'correct', 'incorrect');
+
+        if (index === state.currentIndex) {
+          tile.classList.add('current');
+        }
+        if (selectedIndex !== null) {
+          answered++;
+          tile.classList.add('answered');
+          if (state.checked) {
+            if (selectedIndex === correctIndex) {
+              correct++;
+              tile.classList.add('correct');
+            } else {
+              tile.classList.add('incorrect');
+            }
+          }
+        }
+      });
+
+      const percent = total === 0 ? 0 : Math.round((correct / total) * 100);
+      scoreLabel.textContent = `${correct} / ${total} correct`;
+      scorePercent.textContent = `${percent}%`;
+      const progressValue = total === 0 ? 0 : (answered / total) * 100;
+      progressBar.style.width = `${progressValue}%`;
+    }
+
+    function scrollToQuestion(index) {
+      const questionEl = questionsContainer.children[index];
+      if (!questionEl) return;
+      const rect = questionEl.getBoundingClientRect();
+      const containerRect = questionsContainer.getBoundingClientRect();
+      const offset = rect.top - containerRect.top;
+      questionsContainer.scrollTo({
+        top: offset + questionsContainer.scrollTop - 10,
+        behavior: 'smooth'
+      });
+    }
+
+    function checkAll() {
+      state.checked = true;
+      questions.forEach((_, index) => {
+        updateSelectionStyles(index);
+        updateStatusChip(index);
+        updateFeedback(index);
+      });
+      updateSidebar();
+    }
+
+    function clearAll() {
+      state.selected = Array(questions.length).fill(null);
+      state.checked = false;
+      questions.forEach((_, index) => {
+        updateSelectionStyles(index);
+        updateStatusChip(index);
+        const feedbackEl = document.getElementById(`feedback-${index}`);
+        feedbackEl.style.display = 'none';
+      });
+      updateSidebar();
+    }
+
+    function formatSeconds(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function updateTimerDisplay() {
+      if (!exam.running) {
+        timerDisplay.textContent = 'Off';
+        return;
+      }
+      timerDisplay.textContent = formatSeconds(exam.remainingSeconds);
+    }
+
+    function startExam() {
+      // Reset answers and feedback for a clean exam attempt
+      clearAll();
+      state.checked = false;
+
+      const minutes = parseInt(examDurationSelect.value, 10) || 20;
+      exam.durationSeconds = minutes * 60;
+      exam.remainingSeconds = exam.durationSeconds;
+      exam.running = true;
+
+      // Timer UI + controls
+      updateTimerDisplay();
+      timerDisplay.style.borderColor = 'rgba(56,189,248,0.9)';
+      startExamBtn.disabled = true;
+      endExamBtn.disabled = false;
+
+      // Exam mode: lock answer key and change check button label
+      hiddenKey.style.display = 'none';
+      toggleKeyBtn.disabled = true;
+      checkAllBtn.textContent = 'Submit exam';
+
+      if (exam.timerId) {
+        clearInterval(exam.timerId);
+      }
+
+      exam.timerId = setInterval(() => {
+        if (!exam.running) return;
+        exam.remainingSeconds -= 1;
+        if (exam.remainingSeconds <= 0) {
+          exam.remainingSeconds = 0;
+          updateTimerDisplay();
+          finishExam('time');
+        } else {
+          updateTimerDisplay();
+        }
+      }, 1000);
+    }
+
+    function finishExam(reason) {
+      if (!exam.running) return;
+      exam.running = false;
+      if (exam.timerId) {
+        clearInterval(exam.timerId);
+        exam.timerId = null;
+      }
+
+      // Unlock results
+      checkAll();
+      checkAllBtn.textContent =
+        reason === 'time' ? 'Time is up – answers checked' : 'Exam submitted – answers checked';
+
+      // Re-enable key toggle (still hidden until clicked)
+      toggleKeyBtn.disabled = false;
+
+      // Timer UI
+      if (reason === 'time') {
+        timerDisplay.textContent = 'Time up';
+      } else {
+        timerDisplay.textContent = 'Finished';
+      }
+      timerDisplay.style.borderColor = 'rgba(148,163,184,0.7)';
+
+      startExamBtn.disabled = false;
+      endExamBtn.disabled = true;
+    }
+
+    // Button events
+    checkAllBtn.addEventListener('click', () => {
+      if (exam.running) {
+        // In exam mode this acts as "Submit exam"
+        finishExam('submitted');
+      } else {
+        // Normal practice mode
+        checkAll();
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      clearAll();
+    });
+
+    toggleKeyBtn.addEventListener('click', () => {
+      if (toggleKeyBtn.disabled) return;
+      hiddenKey.style.display = hiddenKey.style.display === 'none' ? 'block' : 'none';
+    });
+
+    startExamBtn.addEventListener('click', () => {
+      if (!exam.running) {
+        startExam();
+      }
+    });
+
+    endExamBtn.addEventListener('click', () => {
+      if (exam.running) {
+        finishExam('submitted');
+      }
+    });
+
+    // Initial render
+    renderQuestions();
+    renderSidebar();
+  </script>
+</body>
+</html>
